@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AreaMapper">
+ 
+ <!-- type省=2，市=3，区=5 -->
+ <select id="queryList" parameterType="pd" resultType="pd">
+  select * from zw_area z where z.parent_id=#{pid} 
+  <if test="null1!=type and ''!=null">
+  and z.type=${type}
+  </if>
+ 
+ </select>	
+ 	
+ <select id="queryOne" parameterType="pd" resultType="pd">
+  select * from zw_area z where z.id=${ID}
+ 
+ </select>
+
+</mapper>

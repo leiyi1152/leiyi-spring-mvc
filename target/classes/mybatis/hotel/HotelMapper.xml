@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HotelMapper">
+ 
+ <select id="HotelListPage" parameterType="Page" resultType="pd">
+   select * from zw_hotel_content hz where 1=1
+   <if test="null != pd.hotelName and ''!=pd.hotelName">
+     and  hz.HOTEL_NAME like concat(concat('%',#{pd.hotelName}),'%')
+   </if>
+   <if test="null != pd.levelId and ''!=pd.levelId ">
+   and hz.HOTEL_LEVEL_ID=${pd.levelId}  
+   </if>
+ 
+ </select>	
+ 
+
+</mapper>

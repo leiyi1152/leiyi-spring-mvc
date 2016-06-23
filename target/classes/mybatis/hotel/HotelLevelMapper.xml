@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HotelLevelMapper">
+	<!-- 酒店级别 -->
+
+
+	<!-- 插入级别 -->
+	<insert id="insert" parameterType="pd">
+		insert into zw_hotel_level
+		values
+		(sq_zw_hotel_level.nextval,#{levelName},#{identifyCode})
+	</insert>
+	<!-- 查询列表 -->
+	<select id="hotelLevellistPage" resultType="pd" parameterType="Page">
+		select * from zw_hotel_level z where 1=1
+		<if test="pd.levelName!= null and ''!=pd.levelName">
+			and z.level_name LIKE CONCAT(CONCAT('%', #{pd.levelName}),'%')
+		</if>
+		<if test="null != pd.identifyCode and '' != pd.identifyCode">
+			and z.identify_code like concat(concat('%',#{pd.identifyCode}),'%')
+		</if>
+	</select>
+
+	<!-- 判断编码，是否已经存在 -->
+	<select id="hascode" parameterType="pd" resultType="Integer">
+		select count(1) from zw_hotel_level z where z.identify_code='${code}'
+		<if test="null!=ID and ''!=ID ">
+			AND z.id !=#{ID}
+		</if>
+	</select>
+
+	<!-- 通过ID获取 -->
+	<select id="queryOne" parameterType="pd" resultType="pd">
+		select * from zw_hotel_level z where z.ID='${ID}'
+	</select>
+
+	<!-- 通过ID来更新 -->
+	<update id="update" parameterType="pd">
+		update zw_hotel_level z set
+		z.level_name=#{levelName},
+		z.identify_Code=#{identifyCode}
+		where z.id=#{ID}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from zw_hotel_level z where z.id=#{ID}
+	</delete>
+	
+	<!-- 查询所有的级别 -->
+	<select id="queryAllLevel" resultType="pd">
+	  select * from zw_hotel_level 
+	</select>
+	
+</mapper>
